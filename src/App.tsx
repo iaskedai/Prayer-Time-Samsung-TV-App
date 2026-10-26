@@ -15,6 +15,7 @@ import { SettingsModal } from './components/SettingsModal';
 import { CitySelectorModal } from './components/CitySelectorModal';
 import { PrayerDetailModal } from './components/PrayerDetailModal';
 import { TVRemoteSimulator } from './components/TVRemoteSimulator';
+import { TVInstallGuideModal } from './components/TVInstallGuideModal';
 
 export default function App() {
   const [settings, setSettings] = useState<AppSettings>(loadSettings);
@@ -26,6 +27,7 @@ export default function App() {
   // Modals state
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isCitySelectorOpen, setIsCitySelectorOpen] = useState(false);
+  const [isInstallGuideOpen, setIsInstallGuideOpen] = useState(false);
   const [detailPrayer, setDetailPrayer] = useState<PrayerItem | null>(null);
 
   // Keep track of previous next prayer to trigger chime on transition
@@ -128,6 +130,10 @@ export default function App() {
         setIsCitySelectorOpen(false);
         return;
       }
+      if (isInstallGuideOpen) {
+        setIsInstallGuideOpen(false);
+        return;
+      }
       if (detailPrayer) {
         setDetailPrayer(null);
         return;
@@ -138,9 +144,10 @@ export default function App() {
     }
 
     // Modal is open: handle enter to close if on action
-    if (isSettingsOpen || isCitySelectorOpen || detailPrayer) {
+    if (isSettingsOpen || isCitySelectorOpen || isInstallGuideOpen || detailPrayer) {
       if (direction === 'enter') {
         if (detailPrayer) setDetailPrayer(null);
+        if (isInstallGuideOpen) setIsInstallGuideOpen(false);
       }
       return;
     }
@@ -157,12 +164,12 @@ export default function App() {
         setDetailPrayer(schedule.prayers[timelineIndex]);
       }
     }
-    // Actions navigation
+    // Actions navigation (7 buttons: City, Method, Chime, Settings, Install, Remote, Fullscreen)
     else if (focusZone === 'actions') {
       if (direction === 'left') {
-        setActionIndex(prev => (prev > 0 ? prev - 1 : 5));
+        setActionIndex(prev => (prev > 0 ? prev - 1 : 6));
       } else if (direction === 'right') {
-        setActionIndex(prev => (prev < 5 ? prev + 1 : 0));
+        setActionIndex(prev => (prev < 6 ? prev + 1 : 0));
       } else if (direction === 'up') {
         setFocusZone('timeline');
       } else if (direction === 'enter') {
@@ -177,10 +184,13 @@ export default function App() {
           case 2: // Chime
             handleToggleChime();
             break;
-          case 4: // Remote
+          case 4: // Install on TV Guide
+            setIsInstallGuideOpen(true);
+            break;
+          case 5: // Remote
             handleToggleRemote();
             break;
-          case 5: // Fullscreen
+          case 6: // Fullscreen
             if (!document.fullscreenElement) {
               document.documentElement.requestFullscreen().catch(() => {});
             } else {
@@ -196,6 +206,7 @@ export default function App() {
     actionIndex,
     isSettingsOpen,
     isCitySelectorOpen,
+    isInstallGuideOpen,
     detailPrayer,
     schedule.prayers,
     handleToggleChime,
@@ -241,7 +252,7 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleNavigate, handleToggleChime]);
 
-  const isModalActive = isSettingsOpen || isCitySelectorOpen || !!detailPrayer;
+  const isModalActive = isSettingsOpen || isCitySelectorOpen || isInstallGuideOpen || !!detailPrayer;
 
   return (
     <main
@@ -303,6 +314,7 @@ export default function App() {
           onOpenCitySelector={() => setIsCitySelectorOpen(true)}
           onToggleChime={handleToggleChime}
           onToggleRemoteSimulator={handleToggleRemote}
+          onOpenInstallGuide={() => setIsInstallGuideOpen(true)}
           onActionHover={(idx) => {
             setFocusZone('actions');
             setActionIndex(idx);
@@ -352,6 +364,13 @@ export default function App() {
         settings={settings}
         onClose={() => setDetailPrayer(null)}
         onOpenSettings={() => setIsSettingsOpen(true)}
+      />
+
+      {/* TV Installation Guide Modal */}
+      <TVInstallGuideModal
+        isOpen={isInstallGuideOpen}
+        onClose={() => setIsInstallGuideOpen(false)}
+        appUrl={typeof window !== 'undefined' ? window.location.href : 'https://ais-pre-tnd7f4acyr6klo6zxboing-585530473025.europe-west2.run.app'}
       />
     </main>
   );

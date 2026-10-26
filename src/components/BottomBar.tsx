@@ -11,6 +11,7 @@ interface BottomBarProps {
   onOpenCitySelector: () => void;
   onToggleChime: () => void;
   onToggleRemoteSimulator: () => void;
+  onOpenInstallGuide: () => void;
   onActionHover?: (index: number) => void;
 }
 
@@ -22,6 +23,7 @@ export const BottomBar: React.FC<BottomBarProps> = ({
   onOpenCitySelector,
   onToggleChime,
   onToggleRemoteSimulator,
+  onOpenInstallGuide,
   onActionHover
 }) => {
   const quote = getTodayInspiration();
@@ -62,6 +64,13 @@ export const BottomBar: React.FC<BottomBarProps> = ({
       sublabel: 'Offsets & Madhab',
       icon: <Settings className="w-4 h-4 text-sky-400" />,
       onClick: onOpenSettings
+    },
+    {
+      id: 'install',
+      label: 'Install on TV',
+      sublabel: 'Setup Guide',
+      icon: <Tv className="w-4 h-4 text-emerald-400" />,
+      onClick: onOpenInstallGuide
     },
     {
       id: 'remote',
