@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #030712;
+    color: #f8fafc;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* 10-Foot UI Safe Zone & D-Pad Remote Focus Enhancements */
+.tv-safe-zone {
+  padding: 3vh 3.5vw;
+}
+
+/* TV Focus ring with high visibility from 10 feet */
+.tv-focusable {
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.15s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.15s ease,
+              background-color 0.15s ease;
+  outline: none !important;
+}
+
+.tv-focusable.tv-focused {
+  transform: scale(1.05) translateZ(0);
+  box-shadow: 0 0 0 3px #38bdf8, 0 10px 30px -5px rgba(56, 189, 248, 0.45), 0 0 20px rgba(56, 189, 248, 0.35);
+  border-color: #38bdf8 !important;
+  z-index: 30;
+}
+
+.tv-focusable-btn.tv-focused {
+  transform: scale(1.08) translateZ(0);
+  box-shadow: 0 0 0 3px #38bdf8, 0 8px 20px -3px rgba(56, 189, 248, 0.5);
+  border-color: #38bdf8 !important;
+  background-color: rgba(56, 189, 248, 0.25) !important;
+  color: #ffffff !important;
+}
+
+/* Glassmorphism surfaces optimized for TV rendering */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-panel-subtle {
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-highlight {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.85) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* Active prayer card aura pulse */
+@keyframes prayerPulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.35), inset 0 0 15px rgba(245, 158, 11, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(245, 158, 11, 0.65), inset 0 0 25px rgba(245, 158, 11, 0.3);
+  }
+}
+
+.prayer-pulse-glow {
+  animation: prayerPulse 3s infinite ease-in-out;
+}
+
+/* Smooth Tabular numerals */
+.tabular-numbers {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* Hide scrollbars for TV */
+::-webkit-scrollbar {
+  display: none;
+}
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}

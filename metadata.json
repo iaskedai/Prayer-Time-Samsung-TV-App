@@ -1,0 +1,6 @@
+{
+  "name": "Tizen TV Prayer Dashboard",
+  "description": "High-performance smart TV prayer dashboard optimized for 10-foot viewing with astronomical calculation, D-pad remote navigation, and glassmorphic atmospheric design.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

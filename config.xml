@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" 
+        xmlns:tizen="http://tizen.org/ns/widgets" 
+        id="http://yourdomain/TizenPrayerDashboard" 
+        version="1.0.0" 
+        viewmodes="fullscreen">
+    <tizen:application id="f017479b.TizenPrayerDashboard" 
+                       package="f017479b" 
+                       exec="index.html" 
+                       screen-orientation="landscape" 
+                       context-menu="disable" 
+                       auto-restart="disable" 
+                       background-support="disable" 
+                       encryption="disable" 
+                       install-location="auto"/>
+    <name>Tizen TV Prayer Dashboard</name>
+    <description>Modern, high-performance Tizen TV Web application for 10-foot living room prayer time tracking, astronomical calculations, and remote navigation.</description>
+    <author href="https://tizen.org">Tizen Engineering Team</author>
+    <icon src="icon.png"/>
+    
+    <tizen:profile name="tv"/>
+    
+    <!-- Required Tizen TV privileges -->
+    <tizen:privilege name="http://tizen.org/privilege/application.launch"/>
+    <tizen:privilege name="http://tizen.org/privilege/tv.inputdevice"/>
+    <tizen:privilege name="http://tizen.org/privilege/internet"/>
+    
+    <!-- Remote control key support flags -->
+    <tizen:setting screen-orientation="landscape" context-menu="disable" background-support="disable" encryption="disable" install-location="auto"/>
+    <tizen:feature name="http://tizen.org/feature/screen.size.all"/>
+    
+    <!-- Content security and network access -->
+    <access origin="*" subdomains="true"/>
+</widget>
